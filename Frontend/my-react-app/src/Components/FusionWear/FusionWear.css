@@ -1,0 +1,9 @@
+.fusionClassName{
+    display: flex;
+    background-color: green;
+    color: white;
+}
+
+.flex-container{
+    display: flex;
+}
