@@ -28,7 +28,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("initiali file is loading");
 });
-
+// signUp
 app.post("/user-signup", async (req, res) => {
   const { userName, fullName, password, captcha, conformPassword } = req.body;
 
@@ -59,72 +59,32 @@ app.post("/user-signup", async (req, res) => {
   }
 });
 
+// 2ND API
+// Login api
+
+app.post("/login", async (req, res) => {
+  const { userName, password, captcha } = req.body;
+
+  // const userDetails = {
+  //   userName,
+  //   password,
+  //   captcha,
+  // };
+
+  try {
+    const findUserNameFromDb = await loginSchema.findOne({
+      userName: userName,
+    });
+    console.log(findUserNameFromDb, "userDetails");
+
+    findUserNameFromDb
+      ? res.send({ loginUser: "user logged insuccesfully", isLoggedIn: true })
+      : res.send({ error: "there is no user or authenticatation failed" });
+
+    // shiva ? true : false
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 app.listen(8000);
-
-// // Step 1 login api
-
-// const userDetails = {
-//   userName: "Nithish",
-//   password: 12345,
-//   captha: "wwefwerwre",
-// };
-
-// oka place ni data storre chedda m ahjkutunna ---- Mongodb
-
-// const userDetails = {
-//   userName: "Nithish", string enter cheyalki aprt number iste nenu store chesukonu
-//   password: "sydtgfjhsdhfgsd",
-//   captha: "wwefwerwre",
-// };
-
-// Schema defined rules
-
-// {
-// userName:String | Number,
-// required:[true, "Please Enter Valid User ID"]
-// },
-
-// {
-// password:Number | String,
-// required:[true,"Please Enter Valid Password"]
-// },
-// {
-//   captha:String,
-//   required:[true," Please Enter Valid Captcha"]
-// }
-
-// captha:String
-
-// // Mongodb install
-
-// // Steps follow
-
-// // npm i mongoose
-
-// // Step 2
-
-// // import
-
-// // import mongoose from 'Mongoose';
-
-// // mongoose.Schema()
-// // mongoose.create()
-// // mongoose.edit()
-// // delete()
-
-// Step 1
-// // Mongodb Installation package install import connect
-
-// // database succesfully
-
-// Step 2
-
-// const userData = {
-//   UserName:"Nithish",
-//   Passwird:"123234234",
-//   captha:'34345345'
-// }
-
-// Rules  api desgin
-
-// validations frontend or backedn

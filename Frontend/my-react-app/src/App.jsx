@@ -12,6 +12,7 @@ import Men from "./Components/Men/Men";
 import Women from "./Components/Women/Women";
 import TrainSearch from "./Components/TrainSearch/TrainSearch";
 import TrainList from "./Components/TrainList/TrainList";
+import UserSignUp from "./Components/UserSignUp/UserSignUp";
 import Login from "./Components/Login/Login";
 
 const data = "sdfsjsdhf";
@@ -35,7 +36,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MyntraDashboard />} />
-          <Route path="/user-signup" element={<Login />} />
+           <Route path="/login" element={<Login />} />
+          <Route path="/user-signup" element={<UserSignUp />} />
           <Route path="/train-search" element={<TrainSearch />} />
           <Route path="/train-list" element={<TrainList />} />
 
@@ -48,3 +50,20 @@ function App() {
 }
 
 export default App;
+
+
+
+// singup created account --- db user details save 
+
+
+// database save ayi vuntayi
+// {
+//   userName:"shalini",
+//   password:12345
+// }
+
+// login page redirect --- login button --- API Cll -- LOGIN API CALL --
+
+
+// FRONTEND PAGE --- http://localhost:5173/login
+// BACKEND PAGE---- http://localhost:6000/login

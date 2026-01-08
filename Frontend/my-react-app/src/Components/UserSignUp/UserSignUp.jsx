@@ -3,15 +3,17 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function UserSignUp() {
   const navigate = useNavigate();
   const [userSignUpDetails, setUserSignUpDetails] = useState({
     userName: "",
     password: "",
+    conformPassword: "",
     captcha: "",
+    fullName: "",
   });
 
-  function handleuserLoginDetails(event) {
+  function handleuserSignUpDetails(event) {
     const { name, value } = event.target;
     console.log(name, value, "name value");
     setUserSignUpDetails((previousUserSignUpDetails) => ({
@@ -22,17 +24,33 @@ export default function Login() {
 
   async function handleLogin() {
     debugger;
-    const { userName, password, captcha } = userSignUpDetails;
-    if (!(userName && password && captcha)) {
+    const { userName, password, conformPassword, captcha, fullName } =
+      userSignUpDetails;
+    if (!(userName && password && conformPassword && captcha && fullName)) {
       alert("you have to enter all the fileds");
     }
     const result = await axios.post(
-      "http://localhost:8000/login",
+      "http://localhost:8000/user-signup",
       userSignUpDetails
     );
 
+    //     frontend request ------------ backend ------
+
+    //     response.
+    //     {
+    // username:"sriram",
+    // isAutheticated:true,
+    // isLoggedIn:true
+    //     }
+
+    // type and value
+
+    // string  "sriram"
+    // boolean true
+    // null  null
+    // phone  77777
     if (result.data.isLoggedIn === true) {
-      navigate("/dashboard");
+      navigate("/login");
       console.log(result, "result");
     }
   }
@@ -49,7 +67,7 @@ export default function Login() {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             name="userName"
-            onChange={handleuserLoginDetails}
+            onChange={handleuserSignUpDetails}
           />
         </div>
         <div class="form-group">
@@ -59,7 +77,27 @@ export default function Login() {
             className="form-control"
             id="exampleInputPassword1"
             name="password"
-            onChange={handleuserLoginDetails}
+            onChange={handleuserSignUpDetails}
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">FullName</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            name="fullName"
+            onChange={handleuserSignUpDetails}
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="exampleInputPassword1"
+            name="conformPassword"
+            onChange={handleuserSignUpDetails}
           />
         </div>
         <div class="form-group">
@@ -69,7 +107,7 @@ export default function Login() {
             className="form-control"
             id="exampleInputPassword1"
             name="captcha"
-            onChange={handleuserLoginDetails}
+            onChange={handleuserSignUpDetails}
           />
         </div>
         <button
@@ -82,7 +120,7 @@ export default function Login() {
           }}
           onClick={handleLogin}
         >
-          Login
+          Signup
         </button>
       </div>
     </>
