@@ -2,47 +2,52 @@
 
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const connectDB = require("../Backend/db.js");
+const router = express.Router();
+const loginSchema = require("../Backend/Schemas/UserLoginSchema.js");
+const {
+  defaultAppRoute,
+  loginRoute,
+  signUpRoute,
+} = require("../Backend/Routes/routes.js");
 
-const expressMainApplication = express();
+console.log("UserLoginSchema", loginSchema);
+
+const app = express();
+connectDB();
+
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-expressMainApplication.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-expressMainApplication.use(express.json());
-
-expressMainApplication.get("/", (req, res) => {
+app.use(express.json());
+app.get("/", (req, res) => {
   res.send("initiali file is loading");
 });
 
-expressMainApplication.post("/login", (req, res) => {
-  // json format
-  console.log(req.body.email, "req");
+app.post("/user-signup", async (req, res) => {
+  const { userName, fullName, password, captcha, conformPassword } = req.body;
 
   try {
     const userDetails = {
-      userName: req.body.email,
-      password: req.body.password,
-      captcha: "TtHq",
+      userName,
+      password,
+      fullName,
+      conformPassword,
+      captcha,
     };
 
-
-    // mongodb store  4 steps create read update delete 
-
-
-    // account creation signup 
-
-    // secutiy  mongodb schema userName data type enti? string nuber boolean null undeifne or symbol
-    // schema creae 
-
-
-    // Mongoose.new Schema{
-    //   userName: String,
-    //   password: String | Number,
-    //   captcha:String
-    // }
+    const newUser = new loginSchema(userDetails);
+    try {
+      const savedUser = await newUser.save();
+      console.log("Document inserted:", savedUser);
+    } catch (err) {
+      console.error(err);
+    }
     res.send({
       data: userDetails,
       message: "User Logged in succesfully",
@@ -54,39 +59,72 @@ expressMainApplication.post("/login", (req, res) => {
   }
 });
 
-// https://www.irctc.co.in/nget/profile/user-signup
+app.listen(8000);
 
-expressMainApplication.post("/profile/user-signup", (req, res) => {
-  res.send("hgelllo");
-});
+// // Step 1 login api
 
-expressMainApplication.listen(8000);
+// const userDetails = {
+//   userName: "Nithish",
+//   password: 12345,
+//   captha: "wwefwerwre",
+// };
 
-// db queries
+// oka place ni data storre chedda m ahjkutunna ---- Mongodb
 
-// frontend 5173 Port
+// const userDetails = {
+//   userName: "Nithish", string enter cheyalki aprt number iste nenu store chesukonu
+//   password: "sydtgfjhsdhfgsd",
+//   captha: "wwefwerwre",
+// };
 
-// Backend  8000 port
+// Schema defined rules
 
+// {
+// userName:String | Number,
+// required:[true, "Please Enter Valid User ID"]
+// },
 
+// {
+// password:Number | String,
+// required:[true,"Please Enter Valid Password"]
+// },
+// {
+//   captha:String,
+//   required:[true," Please Enter Valid Captcha"]
+// }
 
+// captha:String
 
-// Psudo Code 
-Step 1 Form  filed from -- to input values
-Step 2 Search 
+// // Mongodb install
 
-Step 3 frontend to backend connect before that we have to create Route like 
-/search-trains route 
+// // Steps follow
 
-FRONTEND REQ 
+// // npm i mongoose
 
-req.body.from
-req.body.to
-req.bosy.date
-req.body.class
+// // Step 2
 
-const {from, to, date,class} = req.body
+// // import
 
-mongoodb creation date creation 
+// // import mongoose from 'Mongoose';
 
-response.send("account created succfully with the user", userName)
+// // mongoose.Schema()
+// // mongoose.create()
+// // mongoose.edit()
+// // delete()
+
+// Step 1
+// // Mongodb Installation package install import connect
+
+// // database succesfully
+
+// Step 2
+
+// const userData = {
+//   UserName:"Nithish",
+//   Passwird:"123234234",
+//   captha:'34345345'
+// }
+
+// Rules  api desgin
+
+// validations frontend or backedn

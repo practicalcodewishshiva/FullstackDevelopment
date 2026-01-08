@@ -35,7 +35,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MyntraDashboard />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/user-signup" element={<Login />} />
           <Route path="/train-search" element={<TrainSearch />} />
           <Route path="/train-list" element={<TrainList />} />
 

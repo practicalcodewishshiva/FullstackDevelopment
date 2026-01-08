@@ -3,41 +3,63 @@ import React from "react";
 import { useState } from "react";
 
 export default function Login() {
-  const [email, updateEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userSignUpDetails, setUserSignUpDetails] = useState({
+    userName: "",
+    password: "",
+    conformPassword: "",
+    captcha: "",
+    fullName: "",
+  });
 
-  function handleEmail(event) {
-    debugger;
-    const value = event.target.value;
-    updateEmail(value);
-  }
-
-  function handlePassword(event) {
-    setPassword(event.target.value);
-    console.log("password ", event.target.value);
+  function handleuserSignUpDetails(event) {
+    const { name, value } = event.target;
+    console.log(name, value, "name value");
+    setUserSignUpDetails((previousUserSignUpDetails) => ({
+      ...previousUserSignUpDetails,
+      [name]: value,
+    }));
   }
 
   async function handleLogin() {
-    // step 1 api route http://localhost:8000/login
-    // Step 2 axios use chei manam api call cheddam
-    // Step 3 response oka state create cheddam
-    const result = await axios.post("http://localhost:8000/login", {
-      email: email,
-      password: password,
-      third: "hey this is third",
-    });
-    console.log(result);
+    debugger
+    const { userName, password, conformPassword, captcha, fullName } =
+      userSignUpDetails;
+    if (!(userName && password && conformPassword && captcha && fullName)) {
+      alert("you have to enter all the fileds");
+    }
+    const result = await axios.post(
+      "http://localhost:8000/user-signup",
+      userSignUpDetails
+    );
+    console.log(result, "result");
   }
 
-  // 100% async await promises or callbacks
   return (
     <>
       <div>Login</div>
       {name}
-      <input type="email" onChange={handleEmail} />
       UserName
-      <input type="password" onChange={handlePassword} />
+      <input type="email" name="userName" onChange={handleuserSignUpDetails} />
       Password
+      <input
+        type="password"
+        name="password"
+        onChange={handleuserSignUpDetails}
+      />
+      FullName
+      <input
+        type="fullName"
+        name="fullName"
+        onChange={handleuserSignUpDetails}
+      />
+      Confirm Password
+      <input
+        type="text"
+        name="conformPassword"
+        onChange={handleuserSignUpDetails}
+      />
+      <input type="text" name="captcha" onChange={handleuserSignUpDetails} />
+      Captcha
       <button onClick={handleLogin}>Login</button>
     </>
   );
@@ -45,3 +67,15 @@ export default function Login() {
 
 // 2 scenarios frontend
 // backend
+
+// const data = {
+//   name:"shiva",
+//   location:"hyd"
+// }
+
+// ...data
+
+// referbce vs value
+
+
+// loops
